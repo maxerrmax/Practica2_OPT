@@ -1,0 +1,20 @@
+# 1. Carregar el model i les dades
+model apartado2a.mod;
+data apartado2a.dat;
+
+# 2. Seleccionar el solver (CPLEX o Gurobi solen ser els estàndards)
+option solver gurobi;
+
+# 3. Resoldre el problema
+solve;
+
+# 4. Mostrar resultats bàsics
+display Flux_Total;
+
+# 5. Mostrar quines interseccions han estat seleccionades (només les que valen 1)
+printf "\nInterseccions seleccionades amb sensor:\n";
+display {i in I: yi[i] > 0.5} yi[i];
+
+# 6. Opcional: Mostrar quins camins s'han aconseguit sensoritzar
+printf "\nCamins sensoritzats:\n";
+display {c in C: xc[c] > 0.5} xc[c];
